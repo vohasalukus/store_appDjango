@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Store, Category, Product
 from slugify import slugify
 
-
+# Отображение магазинов на главной странице
 def main(request):
     stores = Store.objects.all()
     ctx = {
@@ -10,7 +10,7 @@ def main(request):
     }
     return render(request=request, template_name='store_app/main.html', context=ctx)
 
-
+# Добавление новых магазинов
 def add_store(request):
     if request.method == "POST":
         store_name = request.POST.get('store_name',)
@@ -22,13 +22,13 @@ def add_store(request):
         return redirect('main')
     return render(request, 'store_app/main.html')
 
-
+# Удаление магазина
 def delete_store(request, slug):
     store = get_object_or_404(Store, slug=slug)
     store.delete()
     return redirect('main')
 
-
+# Редактирование магазина
 def edit_store(request, slug):
     store = get_object_or_404(Store, slug=slug)
     if request.method == "POST":
@@ -42,7 +42,7 @@ def edit_store(request, slug):
         return redirect('main')
     return render(request, 'store_app/edit_store.html', {'store': store})
 
-
+# Отображение всех категорий 
 def category(request):
     categories = Category.objects.all()
     ctx = {
@@ -50,7 +50,7 @@ def category(request):
     }
     return render(request=request, template_name='store_app/category.html', context=ctx)
 
-
+# Добавление категорий
 def add_category(request):
     if request.method == "POST":
         category_name = request.POST.get('category_name',)
@@ -61,13 +61,13 @@ def add_category(request):
         return redirect('category')
     return render(request, 'store_app/category.html')
 
-
+# Удаление категорий
 def delete_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     category.delete()
     return redirect('category')
 
-
+# Редактирование категорий
 def edit_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     if request.method == "POST":
@@ -79,7 +79,7 @@ def edit_category(request, slug):
         return redirect('category')
     return render(request, 'store_app/edit_category.html', {'category': category})
 
-
+# Отображение всех продуктов именно этой категории
 def products(request, slug):
     category = get_object_or_404(Category, slug=slug)
     products = Product.objects.filter(category=category)
@@ -89,7 +89,7 @@ def products(request, slug):
     }
     return render(request=request, template_name='store_app/products.html', context=ctx)
 
-
+# Добавление продукта
 def add_product(request):
     if request.method == "POST":
         product_name = request.POST.get('product_name')
@@ -120,13 +120,13 @@ def add_product(request):
         stores = Store.objects.all()
         return render(request, 'store_app/add_product.html', {'categories': categories, 'stores': stores})
 
-
+# Удаление продукта
 def delete_product(request, slug):
     product = get_object_or_404(Product, slug=slug)
     product.delete()
     return redirect('category')
 
-
+# Редактирование продукта
 def edit_product(request, slug):
     product = get_object_or_404(Product, slug=slug)
     if request.method == "POST":
