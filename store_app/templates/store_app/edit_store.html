@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменения магазина</title>
+</head>
+<body>
+<form action="{% url 'edit_store' slug=store.slug %}" method="post">
+    {% csrf_token %}
+    <p>Если вы нашли опечатку или какие-то другие ошибки связанные с магазинами,
+        то, пожалуйста, заполните форму и мы все исправим</p>
+    <input type="text" name="store_name" placeholder="Исправленное название магазина" value="{{ store.name }}">
+    <input type="text" name="store_address" placeholder="Исправленный адрес магазина" value="{{ store.address }}">
+    <button type="submit">Готово</button>
+</form>
+</body>
+</html>

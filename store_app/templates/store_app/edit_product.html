@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="{% url 'edit_product' slug=product.slug %}" method="post">
+    {% csrf_token %}
+    <p>Если вы нашли опечатку или какие-то другие ошибки связанные с продуктами,
+        то, пожалуйста, заполните форму и мы все исправим</p>
+    <input type="text" name="product_name" placeholder="Название продукта">
+    <input type="number" name="product_price" placeholder="Цена продукта">
+    <input type="number" name="product_quantity" placeholder="Количество продукта">
+    <button type="submit">Готово</button>
+</form>
+</body>
+</html>

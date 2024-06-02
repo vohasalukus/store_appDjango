@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Категории</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline;
+            max-width: 10px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #f1f1f1}
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <p> Вот список всех категориий магазина:</p>
+        {% for category in categories %}
+            <li>
+                <a href="{% url 'products' slug=category.slug %}">
+                     {{ category.name }}
+                </a>
+
+            </li>
+              <div class="dropdown">
+                <button class="dropbtn">ещё</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'edit_category' slug=category.slug %}">Редактировать магазин</a>
+                    <a href="{% url 'delete_category' slug=category.slug %}">Удалить магазин</a>
+                </div>
+              </div>
+        {% endfor %}
+    </ul>
+
+    <form action="{% url 'add_category' %}" method="post">
+        {% csrf_token %}
+        <p>В магазине появилась новая категория товаров, но её здесь нет? Помогите нам улучшить приложение!
+            Заполните анкету на добавление новой категории этого магазина</p>
+        <input type="text" name="category_name" placeholder="Название категории">
+        <button type="submit">Добавить</button>
+    </form>
+
+
+
+    <div style="margin-top: 30px">
+        <a href="{% url 'main' %}">Назад</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stores</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline;
+            max-width: 10px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #f1f1f1}
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="welcome">
+            <h1>Добро пожаловать!</h1>
+            <p>Нашли столько магазинов рядом с вами. К какому хотите перейти и просмотреть ассортимент?</p>
+        </div>
+        <div class="stores">
+            <ol>
+                {% for store in stores %}
+                    <li>
+                        <a href="{% url 'category' %}">
+                            {{ store.name }}
+                        </a>
+                        <div class="dropdown">
+                            <button class="dropbtn">ещё</button>
+                            <div class="dropdown-content">
+                                <a href="{% url 'edit_store' slug=store.slug %}">Редактировать магазин</a>
+                                <a href="{% url 'delete_store' slug=store.slug %}">Удалить магазин</a>
+                            </div>
+                        </div>
+                        <ul>
+                            <li>
+                                Адрес: {{ store.address }}
+                            </li>
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+
+    <form action="{% url 'add_store' %}" method="post">
+        {% csrf_token %}
+        <p>Не нашли магазин, который есть рядом с вами?
+            Пожалуйста, помогите сделать наше приложение лучше. Заполните эту форму и мы добавим этот магазин</p>
+        <input type="text" name="store_name" placeholder="Название магазина">
+        <input type="text" name="store_address" placeholder="Адрес магазина">
+        <button type="submit">Добавить</button>
+    </form>
+
+
+</body>
+</html>

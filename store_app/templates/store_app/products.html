@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+        <style>
+        .dropdown {
+            position: relative;
+            display: inline;
+            max-width: 10px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #f1f1f1}
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <h1>Продукты из категории '{{ category.name }}'</h1>
+        {% for product in products %}
+            <li>
+                {{ product.name }}<br>
+
+              <div class="dropdown">
+                <button class="dropbtn">ещё</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'edit_product' slug=product.slug %}">Редактировать продукт</a>
+                    <a href="{% url 'delete_product' slug=product.slug %}">Удалить продукт</a>
+                </div>
+              </div><br>
+                Цена: {{ product.price }}<br>
+                Количество: {{ product.quantity }}<br>
+                Категория: <a href="{% url 'category' %}">{{ product.category }}</a><br>
+                Магазин: {% for store in product.store.all %}
+                        {{ store.name }}
+                        {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+
+<p>Нет продукта? Но вы точно знаете, что он уже давно стоит на прилавках магазина? Тогда, пожалуйста,
+    перейдите по этой ссылке и заполните нашу анкету</p>
+    <a href="{% url  'add_product' %}">Перейти</a>
+
+    <div style="margin-top: 30px">
+        <a href="{% url 'category' %}">Назад</a>
+    </div>
+</body>
+</html>

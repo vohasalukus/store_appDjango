@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="{% url 'add_product' %}" method="post">
+    {% csrf_token %}
+    <p>Добавьте новый продукт в магазин:</p>
+    <input type="text" name="product_name" placeholder="Название продукта"><br>
+    <input type="number" name="product_price" placeholder="Цена продукта" step="0.01"><br>
+    <input type="number" name="product_quantity" placeholder="Количество продукта"><br>
+    <select name="product_category">
+        {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
+    </select><br>
+
+    <p>Выберите магазины, в которых будет доступен продукт:</p>
+    {% for store in stores %}
+        <input type="checkbox" name="product_stores" value="{{ store.id }}"> {{ store.name }}<br>
+    {% endfor %}
+    <button type="submit">Добавить продукт</button>
+</form>
+
+</body>
+</html>

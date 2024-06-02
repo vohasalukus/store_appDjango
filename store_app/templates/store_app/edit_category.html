@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Category</title>
+</head>
+<body>
+<form action="{% url 'edit_category' slug=category.slug %}" method="post">
+    {% csrf_token %}
+    <p>Если вы нашли опечатку или какие-то другие ошибки связанные с категориями,
+        то, пожалуйста, заполните форму и мы все исправим</p>
+    <input type="text" name="category_name" placeholder="Исправленное название магазина" value="{{ category.name }}">
+    <button type="submit">Готово</button>
+</form>
+</body>
+</html>
